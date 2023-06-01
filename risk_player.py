@@ -6,18 +6,29 @@ from math import floor
 from enum import Enum
 
 class player: 
-    def __init__(self, name, colour):
+    def __init__(self, name, colour, game_board_ref):
         self.name = name
         self.colour = colour
         self.territory = []
         self.cards = []
         self.free_troops = 35
+        self.game_board = game_board_ref
         
     def __str__(self):
-        ret_string = self.name + "\n" + str(self.free_troops) + "\n"
+        ret_string = self.name + "\nFree Troops : " + str(self.free_troops) + "\n\nPlayer Cards :\n"
+        
+        for i in self.cards:
+            ret_string += str(i[0].name) + " : " + str(i[1]) + "\n"
+            
+        ret_string += "\nPossible Actions :\n"
+        
+        for i in self.available_actions(self.game_board):
+            ret_string += i.__name__ + "\n"
+            
+        ret_string += "\nControlled Territories :\n"
         
         for i in self.territory:
-            ret_string += str(i.name) + "\n"
+            ret_string += str(i.name) + " : " + str(i.troops) + "\n"
             
         return ret_string
     
