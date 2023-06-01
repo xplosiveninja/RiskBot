@@ -16,7 +16,7 @@ class board:
     def __init__(self, player_names):
         self.game_board = risk_map.Map(self)
         for i in player_names:
-            self.players.append(risk_player.player(i, ""))
+            self.players.append(risk_player.player(i, "", self))
         self.current_player = self.players[0]
         self.player_turns = 0
         self.cards = risk_cards.cards(self.game_board.territory_dict)
