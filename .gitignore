@@ -1,0 +1,5 @@
+#Ignore folder with misc scripts for testing purposes that aren't relevant to project
+test_folder/
+
+#Ignore VS
+.vs/
