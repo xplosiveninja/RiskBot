@@ -3,3 +3,6 @@ test_folder/
 
 #Ignore VS
 .vs/
+
+#Ignore Jupyter notebooks
+.ipynb
