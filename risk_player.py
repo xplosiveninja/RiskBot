@@ -94,6 +94,11 @@ class player:
             
         if defending_number > 2:
             print("You can only defend with 2 troops at a time")
+            return
+        
+        if defending_number > defending_territory.troops:
+            print("You only have {def_troops} troops to defend with".format(def_troops = defending_territory.troops))
+            return
         
         for i in range(0, attacking_number):
             attack_rolls.append(random.randrange(1,7))

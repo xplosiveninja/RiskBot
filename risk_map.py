@@ -7,7 +7,7 @@ class Map:
     north_america_names = ["Alaska", "Northwest Territory", "Greenland", "Alberta", "Ontario", "Quebec", "Western United States", "Eastern United States", "Central America"]
     south_america_names = ["Venezuela", "Peru", "Brazil", "Argentina"]
     africa_names = ["North Africa", "Egypt", "East Africa", "Congo", "South Africa", "Madagascar"]
-    europe_names = ["Iceland", "Scandinavia", "Ukraine", "Great Britian", "Northern Europe", "Southern Europe", "Western Europe"]
+    europe_names = ["Iceland", "Scandinavia", "Ukraine", "Great Britain", "Northern Europe", "Southern Europe", "Western Europe"]
     oceana_names = ["Indonesia", "New Guinea", "Western Australia", "Eastern Australia"]
     asia_names = ["Siam", "India", "China", "Mongolia", "Japan", "Irkutsk", "Yakutsk", "Kamchatka", "Siberia", "Afghanistan", "Ural", "Middle East"]
     
@@ -30,13 +30,13 @@ class Map:
 "Congo" : ["North Africa", "East Africa", "South Africa"],
 "South Africa" : ["Congo", "East Africa", "Madagascar"],
 "Madagascar" : ["East Africa", "South Africa"],
-"Iceland" : ["Greenland", "Scandinavia", "Great Britian"],
+"Iceland" : ["Greenland", "Scandinavia", "Great Britain"],
 "Scandinavia" : ["Iceland", "Ukraine", "Northern Europe"],
 "Ukraine" : ["Scandinavia", "Ural", "Northern Europe", "Afghanistan", "Southern Europe", "Middle East"],
-"Great Britian" : ["Iceland", "Scandinavia", "Northern Europe", "Western Europe"],
-"Northern Europe" : ["Scandinavia", "Great Britian", "Ukraine", "Western Europe", "Southern Europe"],
+"Great Britain" : ["Iceland", "Scandinavia", "Northern Europe", "Western Europe"],
+"Northern Europe" : ["Scandinavia", "Great Britain", "Ukraine", "Western Europe", "Southern Europe"],
 "Southern Europe" : ["Ukraine", "Northern Europe", "Western Europe", "Middle East", "Egypt", "North Africa"],
-"Western Europe" : ["Great Britian", "Northern Europe", "North Africa"],
+"Western Europe" : ["Great Britain", "Northern Europe", "North Africa"],
 "Indonesia" : ["Siam", "New Guinea", "Western Australia"],
 "New Guinea" : ["Indonesia", "Eastern Australia"],
 "Western Australia" : ["Indonesia", "Eastern Australia"],
