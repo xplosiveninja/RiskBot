@@ -4,7 +4,28 @@ import inspect
 
 import risk_controller
 
+class game_states:
+    def assigned_troops_1():
+        board = risk_controller.board(["player_1", "player_2"])
+
+        board.get_actions()
+
+        for key, value in board.game_board.territory_dict.items():
+            board.get_actions()
+            board.perform_action(0, value)
+        
+        board.get_actions()
+        board.perform_action(1, board.game_board.territory_dict["Ural"], 14)
+        
+        board.get_actions()
+        board.perform_action(1, board.game_board.territory_dict["Afghanistan"], 14)
+
+        return board
+
+
 class risk_controller_unit_test(unittest.TestCase):
+    max_iter = 5
+
     def test_player_instantiation(self):
         board = risk_controller.board(["player_1", "player_2"])
         
@@ -41,19 +62,7 @@ class risk_controller_unit_test(unittest.TestCase):
         self.assertEqual(board.possible_actions, [board.current_player.assign_recruits])
 
     def test_attack(self):
-        board = risk_controller.board(["player_1", "player_2"])
-        board.get_actions()
-        self.assertEqual(board.possible_actions, [board.current_player.claim_territory, board.current_player.assign_recruits])
-        
-        for key, value in board.game_board.territory_dict.items():
-            board.get_actions()
-            board.perform_action(0, value)
-        
-        board.get_actions()
-        board.perform_action(1, board.game_board.territory_dict["Ural"], 14)
-        
-        board.get_actions()
-        board.perform_action(1, board.game_board.territory_dict["Afghanistan"], 14)
+        board = game_states.assigned_troops_1()
 
         board.get_actions()
         before = board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Afghanistan"].troops
@@ -76,4 +85,15 @@ class risk_controller_unit_test(unittest.TestCase):
         board.perform_action(0, 1, board.game_board.territory_dict["Ural"], 2, board.game_board.territory_dict["Ukraine"])
         self.assertTrue(board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Ukraine"].troops == before)
 
+    def test_take_over(self):
+        board = game_states.assigned_troops_1()
+
+        prev_owner = board.game_board.territory_dict["Ukraine"].owner.name
+
+        board.get_actions()
+        for i in range(self.max_iter):
+            board.perform_action(0, 3, board.game_board.territory_dict["Ural"], 1, board.game_board.territory_dict["Ukraine"])
+
+        self.assertTrue(board.game_board.territory_dict["Ukraine"].owner.name != prev_owner)
+        
 unittest.main()
