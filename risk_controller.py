@@ -52,7 +52,10 @@ class board:
           
     def get_actions(self):
         self.possible_actions = self.current_player.available_actions(self)
-    
+
+    def get_region(self, region_name):
+        return self.game_board.territory_dict[region_name]
+
     def perform_action(self, arg1, *argv):
         action_result = self.possible_actions[arg1](*argv)
         if self.current_player.player_state == self.current_player.player_states.turn_over:
