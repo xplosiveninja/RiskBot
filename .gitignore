@@ -5,4 +5,5 @@ test_folder/
 .vs/
 
 #Ignore Jupyter notebooks
-.ipynb
+*.ipynb
+game.ipynb

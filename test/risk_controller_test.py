@@ -1,6 +1,7 @@
 import unittest
 import sys
 import inspect
+import random
 
 import risk_controller
 
@@ -69,21 +70,13 @@ class risk_controller_unit_test(unittest.TestCase):
         board.perform_action(0, 3, board.game_board.territory_dict["Ural"], 2, board.game_board.territory_dict["Afghanistan"])
         self.assertTrue(board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Afghanistan"].troops < before)
 
-        before = board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Afghanistan"].troops
-        board.perform_action(0, 5, board.game_board.territory_dict["Ural"], 2, board.game_board.territory_dict["Afghanistan"])
-        self.assertTrue(board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Afghanistan"].troops == before)
+        self.assertRaises(Exception, board.perform_action, 0, 5, board.game_board.territory_dict["Ural"], 2, board.game_board.territory_dict["Afghanistan"])
 
-        before = board.game_board.territory_dict["China"].troops + board.game_board.territory_dict["Afghanistan"].troops
-        board.perform_action(0, 1, board.game_board.territory_dict["China"], 2, board.game_board.territory_dict["Afghanistan"])
-        self.assertTrue(board.game_board.territory_dict["China"].troops + board.game_board.territory_dict["Afghanistan"].troops == before)
+        self.assertRaises(Exception, board.perform_action, 0, 1, board.game_board.territory_dict["China"], 2, board.game_board.territory_dict["Afghanistan"])
 
-        before = board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Siberia"].troops
-        board.perform_action(0, 1, board.game_board.territory_dict["Ural"], 1, board.game_board.territory_dict["Siberia"])
-        self.assertTrue(board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Siberia"].troops == before)
+        self.assertRaises(Exception, board.perform_action, 0, 1, board.game_board.territory_dict["Ural"], 1, board.game_board.territory_dict["Siberia"])
 
-        before = board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Ukraine"].troops
-        board.perform_action(0, 1, board.game_board.territory_dict["Ural"], 2, board.game_board.territory_dict["Ukraine"])
-        self.assertTrue(board.game_board.territory_dict["Ural"].troops + board.game_board.territory_dict["Ukraine"].troops == before)
+        self.assertRaises(Exception, board.perform_action, 0, 1, board.game_board.territory_dict["Ural"], 2, board.game_board.territory_dict["Ukraine"])
 
     def test_take_over(self):
         board = game_states.assigned_troops_1()
@@ -92,7 +85,10 @@ class risk_controller_unit_test(unittest.TestCase):
 
         board.get_actions()
         for i in range(self.max_iter):
-            board.perform_action(0, 3, board.game_board.territory_dict["Ural"], 1, board.game_board.territory_dict["Ukraine"])
+            try:
+                board.perform_action(0, 3, board.game_board.territory_dict["Ural"], 1, board.game_board.territory_dict["Ukraine"])
+            except:
+                pass
 
         self.assertTrue(board.game_board.territory_dict["Ukraine"].owner.name != prev_owner)
         
