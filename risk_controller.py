@@ -45,6 +45,7 @@ class board:
     def change_player(self):
         self.player_turns += 1
         self.current_player = self.players[self.player_turns % len(self.players)]
+        self.current_player.player_state = self.current_player.player_states.turn_in_play
         if self.game_phase == self.game_phases.play:
             self.current_player.add_recruits(self.game_board)
             self.turn_phase = self.turn_phases.assign
@@ -54,7 +55,7 @@ class board:
     
     def perform_action(self, arg1, *argv):
         action_result = self.possible_actions[arg1](*argv)
-        if action_result:
+        if self.current_player.player_state == self.current_player.player_states.turn_over:
             self.change_player()
         self.phase_controller()
             

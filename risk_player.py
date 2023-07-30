@@ -5,13 +5,15 @@ import risk_controller
 from math import floor
 from enum import Enum
 
-class player: 
+class player:
     def __init__(self, name, colour, game_board_ref):
         self.name = name
         self.colour = colour
         self.territory = []
         self.cards = []
         self.free_troops = 35
+        self.player_states = Enum("player_states", ["turn_in_play", "turn_over", "player_lost"])
+        self.player_state = self.player_states.turn_over
         self.game_board = game_board_ref
         
     def __str__(self):
@@ -61,10 +63,9 @@ class player:
             new_territory.set_owner(self)
             new_territory.troops = 1
             self.free_troops -= 1
-            return True
+            self.player_state = self.player_states.turn_over
         else:
-            print("Territory is taken")
-            return False
+            raise Exception("Territory is taken")
     
     def remove_territory(self, lost_territory):
         self.territory.remove(lost_territory)
@@ -77,28 +78,22 @@ class player:
         defenders_lost = 0
         
         if not defending_territory in attacking_territory.get_connections():
-           print("You can only attack neighbouring regions")
-           return
+           raise Exception("You can only attack neighbouring regions")
        
         if defending_territory.owner == self:
-            print("You can't attack yourself")
-            return
+            raise Exception("You can't attack yourself")
         
         if attacking_territory.troops - attacking_number < 1:
-            print("You must leave a troop on the attacking territory")
-            return
+            raise Exception("You must leave a troop on the attacking territory")
         
         if attacking_number > 3:
-            print("You can only attack with 3 troops at a time")
-            return
+            raise Exception("You can only attack with 3 troops at a time")
             
         if defending_number > 2:
-            print("You can only defend with 2 troops at a time")
-            return
+            raise Exception("You can only defend with 2 troops at a time")
         
         if defending_number > defending_territory.troops:
-            print("You only have {def_troops} troops to defend with".format(def_troops = defending_territory.troops))
-            return
+            raise Exception("You only have {def_troops} troops to defend with".format(def_troops = defending_territory.troops))
         
         for i in range(0, attacking_number):
             attack_rolls.append(random.randrange(1,7))
@@ -135,21 +130,19 @@ class player:
         if (self.free_troops - number) >= 0 and territory.owner == self:
             territory.troops += number
             self.free_troops -= number
-            return True
         else:
-            print("Cannot assign troops to that location, either you don't own it or have enough free troops")
-            return False
+            raise Exception("Cannot assign troops to that location, either you don't own it or have enough free troops")
+        
+        if(self.game_board.game_phase == self.game_board.game_phases.starting):
+            self.player_state = self.player_states.turn_over
         
     def move_troops(self, begin_territory, end_territory, number):
         if begin_territory.troops - number <= 1:
-            print("You need to leave atleast 1 troop on each territory")
-            return False
+            raise Exception("You need to leave atleast 1 troop on each territory")
         
         if begin_territory.owner != self and end_territory.owner != self:
-            print("You need to own both the start and end territories")
-            return False
+            raise Exception("You need to own both the start and end territories")
         
         begin_territory.troops -= number
         end_territory.troops += number
-        
-        return True
+        self.player_state = self.player_states.turn_over
