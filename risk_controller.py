@@ -1,12 +1,12 @@
 import risk_player
-import risk_map
+import risk_map_default
 import risk_cards
 import time
 from enum import Enum
 import random
 
 class board:
-    def __init__(self, player_names):
+    def __init__(self, player_names, **kwargs):
         self.players = []
         self.game_phases = Enum("game_phases", ["starting", "play"])
         self.turn_phases = Enum("turn_phases", ["assign", "attack"])
@@ -14,7 +14,8 @@ class board:
         self.turn_phase = self.turn_phases.assign
         self.possible_actions = []
         
-        self.game_board = risk_map.Map(self)
+        map_type = kwargs.get('map_type', risk_map_default.default_map)
+        self.game_board = map_type(self)
         for i in player_names:
             self.players.append(risk_player.player(i, "", self))
         self.current_player = self.players[0]
