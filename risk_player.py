@@ -1,7 +1,4 @@
 import random
-import risk_region
-import risk_map
-import risk_controller
 from math import floor
 from enum import Enum
 
